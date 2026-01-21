@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Widget 3000 - My Awesome Static Site</title>
+    <meta name="description" content="Details about the Super Widget 3000.">
+    <!-- Link to a global stylesheet using the static tag -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        /* Basic styling for the demo */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 1.8em;
+        }
+        .nav {
+            background-color: #0056b3;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        .nav a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            flex-grow: 1;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            color: #0056b3;
+        }
+        .info-box {
+            background-color: #e9f7ff;
+            border-left: 5px solid #007bff;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 4px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: auto; /* Pushes footer to the bottom */
+            padding: 20px;
+            font-size: 0.9em;
+            color: #666;
+            background-color: #e0e0e0;
+            border-top: 1px solid #ccc;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-top: 15px;
+        }
+        .post-list-item {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+        .post-list-item:last-child {
+            border-bottom: none;
+        }
+        .post-list-item h3 a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .post-list-item h3 a:hover {
+            text-decoration: underline;
+        }
+        .post-meta {
+            font-size: 0.9em;
+            color: #777;
+        }
+        pre {
+            background-color: #eee;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+
+    
+    
+    <script type="text/javascript">
+        // Initialize pageData as an empty object to merge into
+        window.pageData = {}; 
+
+        // Create an array of fetch promises
+        const fetchPromises = [
+            
+                fetch('/products/detailed_widget_info.json')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status} for /products/detailed_widget_info.json`);
+                        }
+                        return response.json();
+                    }),
+            
+        ];
+
+        // Wait for all fetches to complete and merge the data
+        Promise.all(fetchPromises)
+            .then(results => {
+                results.forEach(data => {
+                    Object.assign(window.pageData, data); // Merge fetched data into window.pageData
+                });
+                console.log("Page-specific data fetched and merged:", window.pageData);
+                // Dispatch a custom event to signal that pageData is ready
+                window.dispatchEvent(new CustomEvent('pageDataLoaded', { detail: window.pageData }));
+            })
+            .catch(error => {
+                console.error("Error fetching page-specific data:", error);
+            });
+    </script>
+    
+    
+
+</head>
+<body>
+    <div class="header">
+        <h1><a href="/index.html" style="color:white; text-decoration:none;">My Awesome Static Site</a></h1>
+    </div>
+    <div class="nav">
+        <a href="/index.html">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/blog/index.html">Blog</a>
+        <a href="/feed.xml">RSS Feed</a>
+        <a href="/sitemap.xml">Sitemap</a>
+        <a href="/products/widget.html">Widget Page</a> 
+    </div>
+
+    <div class="container">
+        
+    <h1>Super Widget 3000</h1>
+    <p>Details about the Super Widget 3000.</p>
+
+    
+    <div id="product-details-container">
+        <p>Loading product details...</p>
+    </div>
+
+    <p><a href="/index.html">← Back to Home</a></p>
+
+    <script type="text/javascript">
+        // This script will use the fetched data to populate the #product-details-container
+        document.addEventListener('DOMContentLoaded', () => {
+            // Wait for the 'pageDataLoaded' event dispatched by base.html
+            window.addEventListener('pageDataLoaded', (event) => {
+                const pageData = event.detail; // Get the merged data from the event
+                console.log("Page-specific data available in JS (via event):", pageData);
+                const container = document.getElementById('product-details-container');
+                if (container) {
+                    container.innerHTML = `
+                        <h2>Product Details (from JS)</h2>
+                        <p>${pageData.description}</p>
+
+                        <h3>Features:</h3>
+                        <ul>
+                            ${pageData.features.map(f => `<li>${f.icon} ${f.text}</li>`).join('')}
+                        </ul>
+
+                        <h3>Specifications:</h3>
+                        <ul>
+                            <li>Weight: ${pageData.specs.weight}</li>
+                            <li>Dimensions: ${pageData.specs.dimensions}</li>
+                            <li>Material: ${pageData.specs.material}</li>
+                            <li>Manufactured By: ${pageData.manufacturer.name} (${pageData.manufacturer.country})</li>
+                        </ul>
+
+                        <h3>Customer Reviews:</h3>
+                        ${pageData.reviews ? pageData.reviews.map(r => `
+                            <div class="review">
+                                <p><strong>${r.user}</strong> (Rating: ${r.rating}/5)</p>
+                                <p>${r.comment}</p>
+                            </div>
+                        `).join('') : '<p>No reviews yet.</p>'}
+                    `;
+                }
+            });
+            // If pageData is already loaded (e.g., script executed after fetch completes)
+            if (window.pageData && Object.keys(window.pageData).length > 0) {
+                console.log("Page-specific data already available in JS (initial check):", window.pageData);
+                const container = document.getElementById('product-details-container');
+                if (container) {
+                    container.innerHTML = `
+                        <h2>Product Details (from JS)</h2>
+                        <p>${window.pageData.description}</p>
+
+                        <h3>Features:</h3>
+                        <ul>
+                            ${window.pageData.features.map(f => `<li>${f.icon} ${f.text}</li>`).join('')}
+                        </ul>
+
+                        <h3>Specifications:</h3>
+                        <ul>
+                            <li>Weight: ${window.pageData.specs.weight}</li>
+                            <li>Dimensions: ${window.pageData.specs.dimensions}</li>
+                            <li>Material: ${window.pageData.specs.material}</li>
+                            <li>Manufactured By: ${window.pageData.manufacturer.name} (${window.pageData.manufacturer.country})</li>
+                        </ul>
+
+                        <h3>Customer Reviews:</h3>
+                        ${window.pageData.reviews ? window.pageData.reviews.map(r => `
+                            <div class="review">
+                                <p><strong>${r.user}</strong> (Rating: ${r.rating}/5)</p>
+                                <p>${r.comment}</p>
+                            </div>
+                        `).join('') : '<p>No reviews yet.</p>'}
+                    `;
+                }
+            }
+        });
+    </script>
+
+    </div>
+
+    <div class="footer">
+        <p>Contact: contact@example.com</p>
+        <p>Follow us on <a href="https://twitter.com/yourhandle">Twitter</a> and <a href="https://github.com/yourusername">GitHub</a>.</p>
+        <p>Built with our custom Static Site Generator. &copy; 2025 All rights reserved.</p>
+    </div>
+</body>
+</html>

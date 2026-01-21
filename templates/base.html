@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ site.config.site_title }}{% endblock %}</title>
+    <meta name="description" content="{% block description %}{{ page.front_matter.description if page.front_matter.description else site.config.site_description }}{% endblock %}">
+    <!-- Link to a global stylesheet using the static tag -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        /* Basic styling for the demo */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 1.8em;
+        }
+        .nav {
+            background-color: #0056b3;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        .nav a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            flex-grow: 1;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            color: #0056b3;
+        }
+        .info-box {
+            background-color: #e9f7ff;
+            border-left: 5px solid #007bff;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 4px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: auto; /* Pushes footer to the bottom */
+            padding: 20px;
+            font-size: 0.9em;
+            color: #666;
+            background-color: #e0e0e0;
+            border-top: 1px solid #ccc;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-top: 15px;
+        }
+        .post-list-item {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+        .post-list-item:last-child {
+            border-bottom: none;
+        }
+        .post-list-item h3 a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .post-list-item h3 a:hover {
+            text-decoration: underline;
+        }
+        .post-meta {
+            font-size: 0.9em;
+            color: #777;
+        }
+        pre {
+            background-color: #eee;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+
+    {# --- NEW: Fetch page.data from external JSON files --- #}
+    {% if page.data_json_urls %}
+    <script type="text/javascript">
+        // Initialize pageData as an empty object to merge into
+        window.pageData = {}; 
+
+        // Create an array of fetch promises
+        const fetchPromises = [
+            {% for json_url in page.data_json_urls %}
+                fetch('{{ json_url }}')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status} for {{ json_url }}`);
+                        }
+                        return response.json();
+                    }),
+            {% endfor %}
+        ];
+
+        // Wait for all fetches to complete and merge the data
+        Promise.all(fetchPromises)
+            .then(results => {
+                results.forEach(data => {
+                    Object.assign(window.pageData, data); // Merge fetched data into window.pageData
+                });
+                console.log("Page-specific data fetched and merged:", window.pageData);
+                // Dispatch a custom event to signal that pageData is ready
+                window.dispatchEvent(new CustomEvent('pageDataLoaded', { detail: window.pageData }));
+            })
+            .catch(error => {
+                console.error("Error fetching page-specific data:", error);
+            });
+    </script>
+    {% endif %}
+    {# --- END NEW --- #}
+
+</head>
+<body>
+    <div class="header">
+        <h1><a href="{{ url('index.html') }}" style="color:white; text-decoration:none;">{{ site.config.site_title }}</a></h1>
+    </div>
+    <div class="nav">
+        <a href="{{ url('index.html') }}">Home</a>
+        <a href="{{ url('about.html') }}">About</a>
+        <a href="{{ url('blog/index.html') }}">Blog</a>
+        <a href="{{ url('feed.xml') }}">RSS Feed</a>
+        <a href="{{ url('sitemap.xml') }}">Sitemap</a>
+        <a href="{{ url('products/widget.html') }}">Widget Page</a> {# Added link for testing #}
+    </div>
+
+    <div class="container">
+        {% block content %}
+        <!-- Page specific content will go here -->
+        {% endblock %}
+    </div>
+
+    <div class="footer">
+        <p>Contact: {{ site.data.settings.contact_email }}</p>
+        <p>Follow us on <a href="{{ site.data.settings.social_links.twitter }}">Twitter</a> and <a href="{{ site.data.settings.social_links.github }}">GitHub</a>.</p>
+        <p>Built with our custom Static Site Generator. &copy; {% now "%Y" %} All rights reserved.</p>
+    </div>
+</body>
+</html>

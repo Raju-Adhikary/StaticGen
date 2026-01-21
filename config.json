@@ -1,0 +1,18 @@
+{
+    "base_url": "http://localhost:8000",
+    "output_dir": "build",
+    "pages_dir": "pages",
+    "templates_dir": "templates",
+    "static_dir": "static",
+    "assets_dir": "assets",
+    "data_dir": "_data",
+    "plugins_dir": "_plugins",
+    "site_title": "My Awesome Static Site",
+    "site_description": "A demo static site built with Python and Jinja2.",
+    "collections": {
+        "posts": {
+            "path": "_posts",      
+            "output": "blog"       
+        }
+    }
+}

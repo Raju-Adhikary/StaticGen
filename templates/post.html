@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.front_matter.title }} - {{ site.config.site_title }}{% endblock %}
+{% block description %}{{ page.front_matter.description }}{% endblock %}
+
+{% block content %}
+    <h1>{{ page.front_matter.title }}</h1>
+    <p class="post-meta">
+        Published on {{ page.front_matter.date }}
+        {% for author in site.data.authors if author.id == page.front_matter.author %}
+            by {{ author.name }}
+        {% endfor %}
+    </p>
+
+    <article>
+        {{ page.content | safe }} {# This is correct for collection items #}
+    </article>
+
+    <p><a href="{{ url('blog/index.html') }}">← Back to Blog</a></p>
+{% endblock %}

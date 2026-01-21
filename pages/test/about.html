@@ -1,0 +1,18 @@
++++
+{
+    "layout": "base.html",
+    "title": "About Us",
+    "description": "Learn more about our static site project."
+}
++++
+{% extends "base.html" %}
+
+{% block title %}About Us - {{ site.config.site_title }}{% endblock %}
+
+{% block content %}
+    <h1>About Our Project 2</h1>
+    <p>This is a simple "About Us" page to demonstrate multi-page rendering and template inheritance.</p>
+    <p>We are building a powerful and flexible static site generator using Python and Jinja2.</p>
+    <p>Current time: {% now "%H:%M:%S" %}</p>
+    <p>This site is configured with a base URL of: <code>{{ site.config.base_url }}</code></p>
+{% endblock %}

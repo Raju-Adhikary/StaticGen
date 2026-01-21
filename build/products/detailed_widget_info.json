@@ -1,0 +1,27 @@
+{
+    "product_name": "Super Widget 3000",
+    "description": "The ultimate widget for all your needs, designed for efficiency and durability. It's perfect for both professional and casual users.",
+    "features": [
+        {"icon": "⚡", "text": "Blazing Fast Performance"},
+        {"icon": "💧", "text": "IP68 Waterproof Rating"},
+        {"icon": "🔋", "text": "Up to 48-hour Battery Life"},
+        {"icon": "💡", "text": "Intuitive LED Display"},
+        {"icon": "⚙️", "text": "Advanced Self-Calibrating Gears"}
+    ],
+    "specs": {
+        "weight": "150g",
+        "dimensions": "10cm x 5cm x 2cm",
+        "material": "Aerospace-grade Aluminium Alloy",
+        "color_options": ["Space Gray", "Midnight Blue", "Forest Green"]
+    },
+    "manufacturer": {
+        "name": "Global Innovations Inc.",
+        "country": "USA",
+        "website": "http://globalinnovations.example.com"
+    },
+    "reviews": [
+        {"user": "Alice Smith", "rating": 5, "comment": "This widget changed my life! So powerful and easy to use."},
+        {"user": "Bob Johnson", "rating": 4, "comment": "Very good product, but the price is a bit steep for casual use."},
+        {"user": "Charlie Brown", "rating": 5, "comment": "Exceeded all my expectations. Highly recommended!"}
+    ]
+}

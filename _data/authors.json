@@ -1,0 +1,12 @@
+[
+    {
+        "id": "john_doe",
+        "name": "John Doe",
+        "bio": "A passionate writer and developer."
+    },
+    {
+        "id": "jane_doe",
+        "name": "Jane Doe",
+        "bio": "An expert in static site generation."
+    }
+]

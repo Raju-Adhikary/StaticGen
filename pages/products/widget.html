@@ -1,0 +1,94 @@
++++
+{
+    "layout": "base.html",
+    "title": "Super Widget 3000",
+    "description": "Details about the Super Widget 3000.",
+    "data_file": "products/detailed_widget_info.json" 
+}
++++
+{% extends "base.html" %}
+
+{% block title %}{{ page.front_matter.title }} - {{ site.config.site_title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ page.front_matter.title }}</h1>
+    <p>{{ page.front_matter.description }}</p>
+
+    {# Content below will be dynamically rendered by JavaScript after fetch #}
+    <div id="product-details-container">
+        <p>Loading product details...</p>
+    </div>
+
+    <p><a href="{{ url('index.html') }}">← Back to Home</a></p>
+
+    <script type="text/javascript">
+        // This script will use the fetched data to populate the #product-details-container
+        document.addEventListener('DOMContentLoaded', () => {
+            // Wait for the 'pageDataLoaded' event dispatched by base.html
+            window.addEventListener('pageDataLoaded', (event) => {
+                const pageData = event.detail; // Get the merged data from the event
+                console.log("Page-specific data available in JS (via event):", pageData);
+                const container = document.getElementById('product-details-container');
+                if (container) {
+                    container.innerHTML = `
+                        <h2>Product Details (from JS)</h2>
+                        <p>${pageData.description}</p>
+
+                        <h3>Features:</h3>
+                        <ul>
+                            ${pageData.features.map(f => `<li>${f.icon} ${f.text}</li>`).join('')}
+                        </ul>
+
+                        <h3>Specifications:</h3>
+                        <ul>
+                            <li>Weight: ${pageData.specs.weight}</li>
+                            <li>Dimensions: ${pageData.specs.dimensions}</li>
+                            <li>Material: ${pageData.specs.material}</li>
+                            <li>Manufactured By: ${pageData.manufacturer.name} (${pageData.manufacturer.country})</li>
+                        </ul>
+
+                        <h3>Customer Reviews:</h3>
+                        ${pageData.reviews ? pageData.reviews.map(r => `
+                            <div class="review">
+                                <p><strong>${r.user}</strong> (Rating: ${r.rating}/5)</p>
+                                <p>${r.comment}</p>
+                            </div>
+                        `).join('') : '<p>No reviews yet.</p>'}
+                    `;
+                }
+            });
+            // If pageData is already loaded (e.g., script executed after fetch completes)
+            if (window.pageData && Object.keys(window.pageData).length > 0) {
+                console.log("Page-specific data already available in JS (initial check):", window.pageData);
+                const container = document.getElementById('product-details-container');
+                if (container) {
+                    container.innerHTML = `
+                        <h2>Product Details (from JS)</h2>
+                        <p>${window.pageData.description}</p>
+
+                        <h3>Features:</h3>
+                        <ul>
+                            ${window.pageData.features.map(f => `<li>${f.icon} ${f.text}</li>`).join('')}
+                        </ul>
+
+                        <h3>Specifications:</h3>
+                        <ul>
+                            <li>Weight: ${window.pageData.specs.weight}</li>
+                            <li>Dimensions: ${window.pageData.specs.dimensions}</li>
+                            <li>Material: ${window.pageData.specs.material}</li>
+                            <li>Manufactured By: ${window.pageData.manufacturer.name} (${window.pageData.manufacturer.country})</li>
+                        </ul>
+
+                        <h3>Customer Reviews:</h3>
+                        ${window.pageData.reviews ? window.pageData.reviews.map(r => `
+                            <div class="review">
+                                <p><strong>${r.user}</strong> (Rating: ${r.rating}/5)</p>
+                                <p>${r.comment}</p>
+                            </div>
+                        `).join('') : '<p>No reviews yet.</p>'}
+                    `;
+                }
+            }
+        });
+    </script>
+{% endblock %}
