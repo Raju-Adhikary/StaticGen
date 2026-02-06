@@ -160,7 +160,7 @@ INFO - Loading configuration from config.json
 ```
 
 ### Proposed Solution
-Create `/home/runner/work/StaticGen/StaticGen/ssg/__main__.py`:
+Create `ssg/__main__.py` in the project root:
 ```python
 from .cli import main
 
