@@ -102,6 +102,22 @@ Example entries in `config.json`:
 
 Adjust as needed for your project.
 
+## Known Limitations & Roadmap
+
+This project is under active development. We've identified areas for improvement and future features:
+
+- 📋 **[View All Issues](ISSUES.md)** - Comprehensive list of approved limitations and open for Pull-Request
+- 📊 **[Quick Summary](ISSUES-SUMMARY.md)** - At-a-glance overview of issues by priority
+
+Key areas being worked on:
+- Package distribution and installation
+- Automated testing and CI/CD
+- Markdown content support
+- Pagination for collections
+- Enhanced documentation
+
+Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
 ## License
 
 MIT
