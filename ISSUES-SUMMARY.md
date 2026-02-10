@@ -1,86 +1,82 @@
 # StaticGen Issues - Quick Reference
 
-This is a quick reference summary of all identified issues. See [ISSUES.md](ISSUES.md) for complete details.
+This is a quick reference summary of all officially approved issues. See [ISSUES.md](ISSUES.md) for complete details.
 
 ## 🔴 High Priority (Must Fix)
 
 | # | Issue | Labels | Impact |
 |---|-------|--------|--------|
-| 1 | Missing Package Configuration | `enhancement`, `packaging` | Cannot install via pip, poor DX |
-| 2 | No Automated Tests | `testing`, `priority: high` | No safety net for changes |
-| 3 | No CI/CD Pipeline | `ci/cd`, `automation` | No automated quality checks |
-| 4 | Missing `__main__.py` | `bug`, `packaging` | Cannot run as `python -m ssg` |
+| 1 | No Automated Tests | `testing`, `priority: high` | No safety net for changes |
+| 2 | No CI/CD Pipeline | `ci/cd`, `automation` | No automated quality checks |
 
 ## 🟡 Medium Priority (Should Fix)
 
 | # | Issue | Labels | Impact |
 |---|-------|--------|--------|
-| 5 | No Config Validation | `error-handling`, `security` | Cryptic errors, bad UX |
-| 6 | Limited Error Messages | `usability`, `error-handling` | Hard to debug issues |
-| 7 | No Markdown Support | `feature`, `content` | Must write raw HTML |
-| 10 | No Pagination Support | `feature` | Can't handle large collections |
-| 15 | Limited Documentation | `documentation` | Hard to learn advanced features |
-| 16 | No Version Management | `project-management` | Can't track versions |
+| 3 | No Config Validation | `error-handling`, `security` | Cryptic errors, bad UX |
+| 4 | Limited Error Messages | `usability`, `error-handling` | Hard to debug issues |
+| 5 | No Markdown Support | `feature`, `content` | Must write raw HTML |
+| 6 | No Pagination Support | `feature` | Can't handle large collections |
+| 7 | Limited Documentation | `documentation` | Hard to learn advanced features |
+| 8 | No Version Management | `project-management` | Can't track versions , full rebuild on every change|
 
 ## 🟢 Low Priority (Nice to Have)
 
 | # | Issue | Labels | Quick Description |
 |---|-------|--------|-------------------|
-| 8 | No Code Syntax Highlighting | `feature` | Code blocks not highlighted |
-| 9 | Hardcoded RSS to 'posts' | `flexibility` | Only 'posts' collection gets RSS |
+| 9 | No Code Syntax Highlighting | `feature` | Code blocks not highlighted |
+| 10 | Hardcoded RSS to 'posts' | `flexibility` | Only 'posts' collection gets RSS |
 | 11 | No Draft Support | `feature`, `content` | Can't mark drafts |
 | 12 | No Asset Optimization | `performance` | Large file sizes |
 | 13 | No Template Caching | `performance` | Slower builds |
 | 14 | No Built-in Search | `feature` | Must use 3rd party |
-| 17 | Placeholder Commands | `feature` | `deploy` and `create` do nothing |
-| 18 | No Config Schema | `developer-experience` | No IDE support |
-| 19 | Watch Mode Issues | `developer-experience` | Full rebuild on any change |
-| 20 | Missing Security Headers | `security` | Dev server lacks headers |
-| 21 | No Plugin Documentation | `documentation`, `plugins` | Hard to write plugins |
-| 22 | No Type Hints | `code-quality` | Less IDE support |
-| 23 | No Incremental Builds | `performance` | Slow for large sites |
-| 24 | Missing robots.txt | `seo` | Manual setup required |
-| 25 | No Image Optimization | `performance` | No lazy loading, no responsive images |
+| 15 | Placeholder Commands | `feature` | `deploy` and `create` do nothing |
+| 16 | No Config Schema | `developer-experience` | No IDE support |
+| 17 | Watch Mode Issues | `developer-experience` | Full rebuild on any change |
+| 18 | Missing Security Headers | `security` | Dev server lacks headers |
+| 19 | No Plugin Documentation | `documentation`, `plugins` | Hard to write plugins |
+| 20 | No Type Hints | `code-quality` | Less IDE support |
+| 21 | No Incremental Builds | `performance` | Slow for large sites |
+| 22 | Missing robots.txt | `seo` | Manual setup required |
+| 23 | No Image Optimization | `performance` | No lazy loading, no responsive images |
 
 ## Implementation Phases
 
 ### Phase 1: Foundation (Start Here) ✅
-- [ ] Issue #1: Add `setup.py` or `pyproject.toml`
-- [ ] Issue #4: Create `__main__.py` file
-- [ ] Issue #2: Set up pytest and write initial tests
-- [ ] Issue #3: Add GitHub Actions CI/CD
+- [ ] Issue #1: Set up pytest and write initial tests
+- [ ] Issue #2: Add GitHub Actions CI/CD
 
 **Why First:** These establish the foundation for a professional Python project.
 
 ### Phase 2: Core Improvements 🔧
-- [ ] Issue #5: Add config validation
-- [ ] Issue #6: Improve error messages
-- [ ] Issue #15: Enhance documentation
-- [ ] Issue #16: Add version management
-- [ ] Issue #21: Document plugin system
+- [ ] Issue #3: Add config validation
+- [ ] Issue #4: Improve error messages
+- [ ] Issue #7: Enhance documentation
+- [ ] Issue #8: Add version management
+- [ ] Issue #19: Document plugin system
 
 **Why Second:** Improves developer and user experience significantly.
 
 ### Phase 3: Feature Expansion 🚀
-- [ ] Issue #7: Add Markdown support
-- [ ] Issue #10: Implement pagination
-- [ ] Issue #17: Implement `create` command
+- [ ] Issue #5: Add Markdown support
+- [ ] Issue #6: Implement pagination
+- [ ] Issue #15: Implement `create` command, leave 'deploy' command for user's deployment script
 - [ ] Issue #11: Add draft support
 
 **Why Third:** Adds features users expect from a modern SSG.
 
 ### Phase 4: Optimization ⚡
-- [ ] Issue #23: Incremental builds
-- [ ] Issue #12: Asset optimization
-- [ ] Issue #19: Improve watch mode
-- [ ] Issue #22: Add type hints
+- [ ] Issue #21: Incremental builds
+- [ ] Issue #12: Asset optimization as a plugin
+- [ ] Issue #17: Improve watch mode
+- [ ] Issue #20: Add type hints
 
 **Why Last:** Performance optimizations after core functionality is solid.
 
 ## Quick Stats
 
 - **Total Issues Identified:** 25
-- **High Priority:** 4 issues
+- **High Priority:** 2 issues
 - **Medium Priority:** 6 issues  
 - **Low Priority:** 15 issues
 
