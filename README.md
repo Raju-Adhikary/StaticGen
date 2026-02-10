@@ -106,7 +106,7 @@ Adjust as needed for your project.
 
 This project is under active development. We've identified areas for improvement and future features:
 
-- 📋 **[View All Issues](ISSUES.md)** - Comprehensive list of 25 identified limitations and planned improvements
+- 📋 **[View All Issues](ISSUES.md)** - Comprehensive list of approved limitations and open for Pull-Request
 - 📊 **[Quick Summary](ISSUES-SUMMARY.md)** - At-a-glance overview of issues by priority
 
 Key areas being worked on:
